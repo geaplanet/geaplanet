@@ -1,0 +1,12 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,50)
+  { ProgressBar1 ProgressBar
+    MoveScaled(4,29,39,5)
+  }
+  { Button1 Button
+    MoveScaled(8,8,31,10)
+    Drop = True
+  }
+}

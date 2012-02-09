@@ -1,0 +1,62 @@
+' Gambas class file
+
+Public Sub Form_Open()
+
+End
+
+Public Sub Button1_Drop()
+
+  Dim a As String
+  Dim lista_de_rutas As String[]
+  Dim numero_de_archivos As Single
+  Dim linea As String
+  Dim extension As String
+  Dim nombre As String
+ProgressBar1.Value = 0
+  
+  
+  a = Drag.Paste("text/uri-list") ' limitamos el tipo de los datos pegados
+  a = pathFromURI(a)
+  Print a
+  
+  'lista_de_rutas = Split(a, gb.CrLf, "", True) ' cargamos la lista de rutas en un array b
+                                  ' escapando las terminaciones de línea
+  'a = Null  ' reutilizamos la variable "a"
+  'numero_de_archivos = 0
+  'numero_de_archivos = lista_de_rutas.Count
+  'Print numero_de_archivos & " a procesar"
+  
+  'For Each a In lista_de_rutas
+   ' a = Right$(a, -7) ' quitamos "file://"
+    'extension = Right$(a, 4) 'conseguimos la extensión
+    'nombre = Left$(a, -4) ' conseguimos el nombre
+    
+    'a = URLDecode(a)  ' descodificamos las cadenas
+    'a = pathFromURI(a)
+    'Print a
+    'Desktop.Open(a)   ' para probar, abrimos cada tipo de fichero con la aplicación correspondiente
+    'Exec ["convert", a, nombre & ".jpg"]  ' ejecutamos para convertir de formato
+    'ProgressBar1.Value += 1 / numero_de_archivos
+    
+    'Print ProgressBar1.Value
+    'Sleep 1
+    
+  'Next
+
+End
+
+Library "libgvfscommon:0"
+
+Private Extern g_object_unref(gObject As Pointer)
+Private Extern g_file_new_for_uri(fUri As Pointer) As Pointer
+Private Extern g_file_get_path(gFile As Pointer) As String
+
+Public Function pathFromURI(uri As String) As String
+Dim pGFile As Pointer
+Dim s As String
+    s = uri
+    pGFile = g_file_new_for_uri(VarPtr(s))
+    s = g_file_get_path(pGFile)
+    g_object_unref(pGFile)
+    Return s
+End

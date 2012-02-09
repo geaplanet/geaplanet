@@ -1,0 +1,8 @@
+# Gambas Project File 3.0
+Title=barra
+Startup=FMain
+Component=gb.image
+Component=gb.qt4
+Component=gb.qt4.ext
+Component=gb.form
+
